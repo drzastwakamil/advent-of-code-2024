@@ -40,8 +40,7 @@ export function multiplicationSum(input: string): number {
     const indexOfMul = input.indexOf("mul(", prevMulIndex + 3);
 
     if (indexOfMul > -1) {
-  
-      const firstNumberStartsHere = indexOfMul + 4
+      const firstNumberStartsHere = indexOfMul + 4;
       const possibleCorrectInput = input.substring(
         firstNumberStartsHere,
         firstNumberStartsHere + 8,
@@ -64,7 +63,7 @@ export function multiplicationSum(input: string): number {
       );
 
       if (secondNumber) {
-        result += Number(firstNumber) * Number(secondNumber)
+        result += Number(firstNumber) * Number(secondNumber);
       }
     }
 
@@ -73,7 +72,6 @@ export function multiplicationSum(input: string): number {
 
   return result;
 }
-
 
 const input = await Deno.readTextFile("./puzzle03/puzzle03_input.txt");
 const result = multiplicationSum(input);
