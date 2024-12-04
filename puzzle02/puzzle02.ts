@@ -34,9 +34,9 @@ export function isReportLevelsSafe(line: string): boolean {
       return false;
     }
     if (meetsIncreaseOrDecreaseCriteria(previousLevelValue, levelValue)) {
-      continue
+      continue;
     } else {
-      return false
+      return false;
     }
   }
 
