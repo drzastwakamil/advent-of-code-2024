@@ -1,26 +1,56 @@
 import { assertEquals } from "@std/assert";
 import { countInLineXMAS, countXMAS } from "./puzzle04.ts";
 
-// Deno.test("countXMAS - test case 1", () => {
-//   const result = countXMAS(
-//     `....XXMAS.
-// .SAMXMS...
-// ...S..A...
-// ..A.A.MS.X
-// XMASAMX.MM
-// X.....XA.A
-// S.S.S.S.SS
-// .A.A.A.A.A
-// ..M.M.M.MM
-// .X.X.XMASX`,
-//   );
-//   const expected = 18;
-//   assertEquals(
-//     result,
-//     expected,
-//     `Expected ${18} but got ${result} for input test puzzle input.`,
-//   );
-// });
+Deno.test("countXMAS - test case 1", () => {
+  const result = countXMAS(
+    `MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX`,
+  );
+  const expected = 18;
+  assertEquals(
+    result,
+    expected,
+    `Expected ${18} but got ${result} for input test puzzle input.`,
+  );
+});
+
+Deno.test("countXMAS - test case 2", () => {
+  const result = countXMAS(
+    `XMAS
+MMMM
+AAAA
+SSSS`,
+  );
+  const expected = 3;
+  assertEquals(
+    result,
+    expected,
+    `Expected ${3} but got ${result} for input test puzzle input.`,
+  );
+});
+
+Deno.test("countXMAS - test case 3", () => {
+  const result = countXMAS(
+    `SAMX
+MMMM
+AAAA
+SSSS`,
+  );
+  const expected = 3;
+  assertEquals(
+    result,
+    expected,
+    `Expected ${3} but got ${result} for input test puzzle input.`,
+  );
+});
 
 Deno.test("countInLineXMAS - test case 1", () => {
   const result = countInLineXMAS([
@@ -64,10 +94,15 @@ Deno.test("countInLineXMAS - test case 2", () => {
   );
 });
 
-
 Deno.test("countInLineXMAS - test case 3", () => {
   const result = countInLineXMAS([
-    'X', 'M','A', 'S', 'A', 'M', 'X'
+    "X",
+    "M",
+    "A",
+    "S",
+    "A",
+    "M",
+    "X",
   ]);
   const expected = 2;
   assertEquals(

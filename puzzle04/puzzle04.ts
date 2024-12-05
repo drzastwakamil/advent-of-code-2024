@@ -1,15 +1,5 @@
 type Character = "X" | "M" | "A" | "S";
 export function countXMAS(input: string): number {
-  // we should have 4 arrays of characters??
-  // we dont flip because when we interpret we look for either XMAS or SAMX
-
-  // horizontal
-  // vertical
-  // diagonal LTR
-  // diagonal RTL
-
-  // lets start with horizontal
-
   const horizontal = input.split("\n").map((line) =>
     line.split("") as Array<Character>
   );
@@ -24,13 +14,77 @@ export function countXMAS(input: string): number {
       vertical[index].push(character);
     }
   }
-  let result = 0
+
+  const diagonalLTR: Array<Array<Character>> = [];
+
+  for (let index = 0; index < horizontal[0].length - 3; index++) {
+    const diagonalLine: Array<Character> = [];
+    for (
+      let x = index,
+        y = 0;
+      x < horizontal[0].length && y < vertical.length;
+      x++, y++
+    ) {
+      diagonalLine.push(horizontal[y][x]);
+    }
+    diagonalLTR.push(diagonalLine);
+  }
+
+  for (let index = 1; index < vertical[0].length - 3; index++) {
+    const diagonalLine: Array<Character> = [];
+    for (
+      let x = 0,
+        y = index;
+      x < horizontal[0].length && y < vertical.length;
+      x++, y++
+    ) {
+      diagonalLine.push(horizontal[y][x]);
+    }
+    diagonalLTR.push(diagonalLine);
+  }
+
+  const diagonalRTL: Array<Array<Character>> = [];
+  for (let index = horizontal[0].length - 1; index > 2; index--) {
+    const diagonalLine: Array<Character> = [];
+    for (
+      let x = index,
+        y = 0;
+      x >= 0 && y < vertical.length;
+      x--, y++
+    ) {
+      diagonalLine.push(horizontal[y][x]);
+    }
+    diagonalRTL.push(diagonalLine);
+  }
+
+  for (let index = 1; index < vertical[0].length - 3; index++) {
+    const diagonalLine: Array<Character> = [];
+    for (
+      let x = horizontal[0].length - 1,
+        y = index;
+      x >= 0 && y < vertical.length;
+      x--, y++
+    ) {
+      diagonalLine.push(horizontal[y][x]);
+    }
+    diagonalRTL.push(diagonalLine);
+  }
+
+  let result = 0;
   for (const line of horizontal) {
-    result += countInLineXMAS(line)
+    result += countInLineXMAS(line);
   }
 
   for (const line of vertical) {
-    result += countInLineXMAS(line)
+    result += countInLineXMAS(line);
+  }
+
+  for (const line of diagonalLTR) {
+    result += countInLineXMAS(line);
+  }
+
+  for (const line of diagonalRTL) {
+    result += countInLineXMAS(line);
   }
 
   return result;
@@ -47,8 +101,8 @@ export function countInLineXMAS(line: Array<Character>) {
         index += 1;
         if (index === 4) {
           count += 1;
-          looksFor = looksFor === 'SAMX' ? 'XMAS' : 'SAMX'
-          index = 1
+          looksFor = looksFor === "SAMX" ? "XMAS" : "SAMX";
+          index = 1;
         }
       } else {
         looksFor = undefined;
