@@ -18,7 +18,7 @@ MXMXAXMASX`,
   assertEquals(
     result,
     expected,
-    `Expected ${18} but got ${result} for input test puzzle input.`,
+    `Expected ${expected} but got ${result} for input test puzzle input.`,
   );
 });
 
@@ -48,7 +48,7 @@ SSSS`,
   assertEquals(
     result,
     expected,
-    `Expected ${3} but got ${result} for input test puzzle input.`,
+    `Expected ${expected} but got ${result} for input test puzzle input.`,
   );
 });
 
@@ -69,7 +69,7 @@ Deno.test("countInLineXMAS - test case 1", () => {
   assertEquals(
     result,
     expected,
-    `Expected ${1} but got ${result} for input being correct here....XXMAS.`,
+    `Expected ${expected} but got ${result} for input being correct here....XXMAS.`,
   );
 });
 
@@ -90,7 +90,7 @@ Deno.test("countInLineXMAS - test case 2", () => {
   assertEquals(
     result,
     expected,
-    `Expected ${1} but got ${result} for input being correct here .SAMXMS....`,
+    `Expected ${expected} but got ${result} for input being correct here .SAMXMS....`,
   );
 });
 
@@ -108,6 +108,6 @@ Deno.test("countInLineXMAS - test case 3", () => {
   assertEquals(
     result,
     expected,
-    `Expected ${1} but got ${result} for input being correct here XMASAMX`,
+    `Expected ${expected} but got ${result} for input being correct here XMASAMX`,
   );
 });
