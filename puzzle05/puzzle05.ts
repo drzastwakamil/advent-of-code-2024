@@ -19,6 +19,16 @@ export function checkIfPageNumbersMeetOrderRules(
 }
 
 const input = await Deno.readTextFile("./puzzle05/puzzle05_input.txt");
+const [rulesInput, pageNumbersInput] = input.split('\n\n')
 
-const result = 0;
+
+const rules = new Set(rulesInput.split('\n'))
+let result = 0;
+for (const pageNumbersString of pageNumbersInput.split('\n')){
+  const pageNumbers = pageNumbersString.split(',')
+  if (checkIfPageNumbersMeetOrderRules(rules, pageNumbers)) {
+    const middlePageNumber = pageNumbers[Math.floor(pageNumbers.length / 2)]
+    result += Number(middlePageNumber)
+  }
+}
 console.log("the result ", result);
