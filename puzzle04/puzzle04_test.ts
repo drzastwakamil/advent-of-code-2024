@@ -151,30 +151,11 @@ import {
 //   );
 // });
 
-// // Deno.test("countCrossMassesLOL - test case 1", () => {
-// //   const result = countCrossMassesLOL(`MMS
-// // MAM
-// // MMS`);
-// //   const expected = 1;
-// //   assertEquals(
-// //     result,
-// //     expected,
-// //     `Expected ${expected} but got ${result}`,
-// //   );
-// // });
-
-// Deno.test("countCrossMassesLOL - test case 2", () => {
-//   const result = countCrossMassesLOL(`.M.S......
-// ..A..MSMS.
-// .M.S.MAA..
-// ..A.ASMSM.
-// .M.S.M....
-// ..........
-// S.S.S.S.S.
-// .A.A.A.A..
-// M.M.M.M.M.
-// ..........`);
-//   const expected = 9;
+// Deno.test("countCrossMassesLOL - test case 1", () => {
+//   const result = countCrossMassesLOL(`MMS
+// MAM
+// MMS`);
+//   const expected = 1;
 //   assertEquals(
 //     result,
 //     expected,
@@ -182,23 +163,41 @@ import {
 //   );
 // });
 
-Deno.test("countCrossMassesLOL - test case 3", () => {
-  const result = countCrossMassesLOL(`MMMMMMM
-MMMMMMM
-MMMMMMM
-MMMMMMM
-MMMMMMM
-MMSMMMM
-MAMMMMM
-MMSMMMM
-`);
-  const expected = 1;
+Deno.test("countCrossMassesLOL - test case 2", () => {
+  const result = countCrossMassesLOL(`.M.S......
+..A..MSMS.
+.M.S.MAA..
+..A.ASMSM.
+.M.S.M....
+..........
+S.S.S.S.S.
+.A.A.A.A..
+M.M.M.M.M.
+..........`);
+  const expected = 9;
   assertEquals(
     result,
     expected,
     `Expected ${expected} but got ${result}`,
   );
 });
+
+// Deno.test("countCrossMassesLOL - test case 3", () => {
+//   const result = countCrossMassesLOL(`MMMMMMM
+// MMMMMMM
+// MMMMMMM
+// MMMMMMM
+// MMMMMMM
+// MMSMMMM
+// MAMMMMM
+// MMSMMMM`);
+//   const expected = 1;
+//   assertEquals(
+//     result,
+//     expected,
+//     `Expected ${expected} but got ${result}`,
+//   );
+// });
 
 // Deno.test("countCrossMassesLOL - test case 4", () => {
 //   const result = countCrossMassesLOL(`MMMMMMM
@@ -208,9 +207,42 @@ MMSMMMM
 // MMMMMMM
 // MMMMMMM
 // MMMMMMM
-// MMMMMMM
-// `);
+// MMMMMMM`);
 //   const expected = 1;
+//   assertEquals(
+//     result,
+//     expected,
+//     `Expected ${expected} but got ${result}`,
+//   );
+// });
+
+// Deno.test("countCrossMassesLOL - test case 5", () => {
+//   const result = countCrossMassesLOL(`MMMMMMM
+// MMSMMMS
+// MAMMMAM
+// MMSMMMS
+// MMMMMMM
+// MMMMMMM
+// MMMMMMM
+// MMMMMMM`);
+//   const expected = 2;
+//   assertEquals(
+//     result,
+//     expected,
+//     `Expected ${expected} but got ${result}`,
+//   );
+// });
+
+// Deno.test("countCrossMassesLOL - test case 6", () => {
+//   const result = countCrossMassesLOL(`MMMMMMM
+// MMSMMMS
+// MAMMMAM
+// MMSMMMS
+// MMMMMMM
+// MMSMMMS
+// MAMMMAM
+// MMSMMMS`);
+//   const expected = 4;
 //   assertEquals(
 //     result,
 //     expected,

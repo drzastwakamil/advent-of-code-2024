@@ -146,7 +146,7 @@ export function countInLineMAS(
         index += 1;
         if (index === 3) {
           const moveToPrevX = variant === "LTR" ? -1 : 1;
-          positionsArray.push(`${character.x + moveToPrevX}${character.y - 1}`);
+          positionsArray.push(`${character.x + moveToPrevX}:${character.y - 1}`);
           looksFor = looksFor === "SAM" ? "MAS" : "SAM";
           index = 1;
         }
@@ -174,11 +174,11 @@ export function countCrossMassesLOL(input: string): number {
     line.split("") as Array<Character>
   );
 
+
   const vertical = Array.from(
     { length: horizontal[0].length },
     (): Array<Character> => [],
   );
-
   for (const horizontalLine of horizontal) {
     for (const [index, character] of horizontalLine.entries()) {
       vertical[index].push(character);
@@ -186,13 +186,30 @@ export function countCrossMassesLOL(input: string): number {
   }
 
   const diagonalLTR: Array<Array<PositionedCharacter>> = [];
-  // we do - 2 instead of - 3 cause of the XMAS vs MAS words length...
-  for (let index = 0; index < horizontal[0].length - 2; index++) {
+  for (let index = 0; index < horizontal[0].length; index++) {
     const diagonalLine: Array<PositionedCharacter> = [];
     for (
       let x = index,
         y = 0;
-      x < horizontal[0].length && y < vertical.length;
+      x < horizontal[0].length && y < vertical[0].length;
+      x++, y++
+    ) {
+      diagonalLine.push({
+        value: horizontal[y][x],
+        x,
+        y,
+      });
+    }
+
+    diagonalLTR.push(diagonalLine);
+  }
+
+  for (let yStart = 1; yStart < vertical[0].length; yStart++) {
+    const diagonalLine: Array<PositionedCharacter> = [];
+    for (
+      let x = 0,
+        y = yStart;
+      x < horizontal[0].length && y < vertical[0].length;
       x++, y++
     ) {
       diagonalLine.push({
@@ -204,30 +221,13 @@ export function countCrossMassesLOL(input: string): number {
     diagonalLTR.push(diagonalLine);
   }
 
-  for (let index = 1; index < vertical[0].length - 2; index++) {
-    const diagonalLine: Array<PositionedCharacter> = [];
-    for (
-      let x = 0,
-        y = index;
-      x < horizontal[0].length && y < vertical.length;
-      x++, y++
-    ) {
-      diagonalLine.push({
-        value: horizontal[y][x],
-        x,
-        y,
-      });
-    }
-    diagonalLTR.push(diagonalLine);
-  }
-  console.log('diagonal LTR', diagonalLTR)
   const diagonalRTL: Array<Array<PositionedCharacter>> = [];
   for (let index = horizontal[0].length - 1; index > 1; index--) {
     const diagonalLine: Array<PositionedCharacter> = [];
     for (
       let x = index,
         y = 0;
-      x >= 0 && y < vertical.length;
+      x >= 0 && y < vertical[0].length;
       x--, y++
     ) {
       diagonalLine.push({
@@ -239,12 +239,12 @@ export function countCrossMassesLOL(input: string): number {
     diagonalRTL.push(diagonalLine);
   }
 
-  for (let index = 1; index < vertical[0].length - 2; index++) {
+  for (let index = 1; index < vertical[0].length; index++) {
     const diagonalLine: Array<PositionedCharacter> = [];
     for (
       let x = horizontal[0].length - 1,
         y = index;
-      x >= 0 && y < vertical.length;
+      x >= 0 && y < vertical[0].length;
       x--, y++
     ) {
       diagonalLine.push({
@@ -263,6 +263,8 @@ export function countCrossMassesLOL(input: string): number {
       ltrCrossMassesXYs.add(xy);
     });
   });
+
+  console.log('LTR cross masses XYS', ltrCrossMassesXYs)
 
   const rtlCrossMassesXYs = new Set<string>();
   diagonalRTL.forEach((line) => {
