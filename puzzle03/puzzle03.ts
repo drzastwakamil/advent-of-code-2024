@@ -74,5 +74,23 @@ export function multiplicationSum(input: string): number {
 }
 
 const input = await Deno.readTextFile("./puzzle03/puzzle03_input.txt");
+
+
 const result = multiplicationSum(input);
-console.log(" the result ", result);
+console.log("the result ", result);
+
+
+
+
+const firstDoOrDontIndex = Math.min(input.indexOf("do()"), input.indexOf("don't()"))
+var resultPart2 = multiplicationSum(input.substring(0, firstDoOrDontIndex))
+var endSearchIndex = firstDoOrDontIndex;
+do {
+  var startSearchIndex = input.indexOf("do()", endSearchIndex)
+  endSearchIndex = input.indexOf("don't()", startSearchIndex)
+
+  if (startSearchIndex >= 0) {
+    resultPart2 += multiplicationSum(input.substring(startSearchIndex, endSearchIndex))
+  }
+} while(startSearchIndex >= 0)
+  console.log("the result for part 2", resultPart2);
