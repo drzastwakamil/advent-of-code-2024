@@ -11,12 +11,22 @@ for (const line of input.split("\n")) {
   listB.push(itemB);
 }
 
-listA.sort();
-listB.sort();
 
-let answer = 0;
-for (let index = 0; index < listA.length; index++) {
-  answer += Math.abs(listA[index] - listB[index]);
-}
+// PART 1 
+// listA.sort();
+// listB.sort();
 
-console.log("THE ANSWER IS: ", answer);
+// let answer = 0;
+// for (let index = 0; index < listA.length; index++) {
+//   answer += Math.abs(listA[index] - listB[index]);
+// }
+
+// console.log("THE ANSWER IS: ", answer);
+
+// PART 2
+let answer = 0
+listA.forEach(itemA => {
+  answer += listB.filter(itemB => itemB === itemA).length * itemA
+})
+
+console.log('THE ANSWER IS: ', answer)
