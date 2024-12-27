@@ -45,42 +45,47 @@ export function isReportLevelsSafe(line: string): [boolean, number] {
 const input = await Deno.readTextFile("./puzzle02/puzzle02_input.txt");
 
 let answer = 0;
-let part2answer = 0
+let part2answer = 0;
 for (const line of input.split("\n")) {
-
-  const [isSafe, failedAtIndex] = isReportLevelsSafe(line)
+  const [isSafe, failedAtIndex] = isReportLevelsSafe(line);
   if (isSafe) {
     answer += 1;
-    part2answer += 1
-    continue
-  } else { 
-    const lineAsArray = line.split(' ')
-    const tolerableLevelCandidate = [...lineAsArray].toSpliced(failedAtIndex, 1).join(' ')
-    const [isSafe] = isReportLevelsSafe(tolerableLevelCandidate)
+    part2answer += 1;
+    continue;
+  } else {
+    const lineAsArray = line.split(" ");
+    const tolerableLevelCandidate = [...lineAsArray].toSpliced(failedAtIndex, 1)
+      .join(" ");
+    const [isSafe] = isReportLevelsSafe(tolerableLevelCandidate);
     if (isSafe) {
       part2answer += 1;
-      continue
+      continue;
     }
 
-
     if (failedAtIndex > 0) {
-      const tolerableLevelCandidate = [...lineAsArray].toSpliced(failedAtIndex - 1, 1).join(' ')
-      const [isSafe] = isReportLevelsSafe(tolerableLevelCandidate)
+      const tolerableLevelCandidate = [...lineAsArray].toSpliced(
+        failedAtIndex - 1,
+        1,
+      ).join(" ");
+      const [isSafe] = isReportLevelsSafe(tolerableLevelCandidate);
       if (isSafe) {
         part2answer += 1;
-        continue
+        continue;
       }
     }
 
     if (failedAtIndex < lineAsArray.length - 1) {
-      const tolerableLevelCandidate = [...lineAsArray].toSpliced(failedAtIndex + 1, 1).join(' ')
-      const [isSafe] = isReportLevelsSafe(tolerableLevelCandidate)
+      const tolerableLevelCandidate = [...lineAsArray].toSpliced(
+        failedAtIndex + 1,
+        1,
+      ).join(" ");
+      const [isSafe] = isReportLevelsSafe(tolerableLevelCandidate);
       if (isSafe) {
         part2answer += 1;
-        continue
+        continue;
       }
     }
   }
 }
 console.log("THE ANSWER: ", answer);
-console.log('THE ANSWER PART 2: ', part2answer);
+console.log("THE ANSWER PART 2: ", part2answer);

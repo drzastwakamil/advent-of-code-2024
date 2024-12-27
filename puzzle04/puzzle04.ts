@@ -146,7 +146,9 @@ export function countInLineMAS(
         index += 1;
         if (index === 3) {
           const moveToPrevX = variant === "LTR" ? -1 : 1;
-          positionsArray.push(`${character.x + moveToPrevX}:${character.y - 1}`);
+          positionsArray.push(
+            `${character.x + moveToPrevX}:${character.y - 1}`,
+          );
           looksFor = looksFor === "SAM" ? "MAS" : "SAM";
           index = 1;
         }
@@ -173,7 +175,6 @@ export function countCrossMassesLOL(input: string): number {
   const horizontal = input.split("\n").map((line) =>
     line.split("") as Array<Character>
   );
-
 
   const vertical = Array.from(
     { length: horizontal[0].length },
@@ -264,7 +265,7 @@ export function countCrossMassesLOL(input: string): number {
     });
   });
 
-  console.log('LTR cross masses XYS', ltrCrossMassesXYs)
+  console.log("LTR cross masses XYS", ltrCrossMassesXYs);
 
   const rtlCrossMassesXYs = new Set<string>();
   diagonalRTL.forEach((line) => {
@@ -277,6 +278,5 @@ export function countCrossMassesLOL(input: string): number {
   return (ltrCrossMassesXYs.intersection(rtlCrossMassesXYs)).size;
 }
 
-
-const part2result = countCrossMassesLOL(input)
-console.log('part 2 result: ', part2result)
+const part2result = countCrossMassesLOL(input);
+console.log("part 2 result: ", part2result);

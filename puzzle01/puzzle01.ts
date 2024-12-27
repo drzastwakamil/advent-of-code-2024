@@ -11,8 +11,7 @@ for (const line of input.split("\n")) {
   listB.push(itemB);
 }
 
-
-// PART 1 
+// PART 1
 // listA.sort();
 // listB.sort();
 
@@ -24,9 +23,9 @@ for (const line of input.split("\n")) {
 // console.log("THE ANSWER IS: ", answer);
 
 // PART 2
-let answer = 0
-listA.forEach(itemA => {
-  answer += listB.filter(itemB => itemB === itemA).length * itemA
-})
+let answer = 0;
+listA.forEach((itemA) => {
+  answer += listB.filter((itemB) => itemB === itemA).length * itemA;
+});
 
-console.log('THE ANSWER IS: ', answer)
+console.log("THE ANSWER IS: ", answer);
