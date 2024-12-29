@@ -21,8 +21,6 @@ export function isLooping(array: Array<string>) {
       array.length - loopLength - loopLength,
       array.length - loopLength,
     );
-    // console.log("arr: " + array.join("") + "\n");
-    // console.log(loopA.join("") + "\n" + loopB.join("") + "\n______");
 
     if (loopA.join("") === loopB.join("")) {
       return true;
@@ -167,7 +165,5 @@ for (let y = 0; y < map.length; y++) {
   }
 }
 
-// guard.moveToTheEndOfTheMap();
-// console.log("the distinct route count ", guard.distinctVisitedFieldsCount);
 guard.findLoopsCount();
 console.log("loops count", distinctLoopObstaclePositions.size);
