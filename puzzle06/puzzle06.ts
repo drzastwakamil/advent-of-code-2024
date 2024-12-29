@@ -14,8 +14,27 @@ enum Direction {
   Left,
 }
 
+export function isLooping(array: Array<string>) {
+  for (let loopLength = 4; loopLength <= array.length / 2; loopLength += 4) {
+    const loopA = array.slice(array.length - loopLength);
+    const loopB = array.slice(
+      array.length - loopLength - loopLength,
+      array.length - loopLength,
+    );
+    // console.log("arr: " + array.join("") + "\n");
+    // console.log(loopA.join("") + "\n" + loopB.join("") + "\n______");
+
+    if (loopA.join("") === loopB.join("")) {
+      return true;
+    }
+  }
+  return false;
+}
+
+const distinctLoopObstaclePositions = new Set<string>();
 const map = input.split("\n").map((line) => line.split("") as Array<MapField>);
 const guard = {
+  map,
   distinctVisitedFieldsCount: 1,
   x: -1,
   y: -1,
@@ -25,23 +44,23 @@ const guard = {
   },
   facesDirection: Direction.Up,
   facesField() {
-    return map[this.y + this.forwardMovementDelta.y][
+    return this.map[this.y + this.forwardMovementDelta.y][
       this.x + this.forwardMovementDelta.x
     ];
   },
   reachedEndOfMap() {
-    return this.y === 0 || this.y === map.length - 1 ||
-      this.x === 0 || this.x === map[0].length - 1;
+    return this.y === 0 || this.y === this.map.length - 1 ||
+      this.x === 0 || this.x === this.map[0].length - 1;
   },
   moveForward() {
-    map[this.y][this.x] = MapField.Visited;
+    this.map[this.y][this.x] = MapField.Visited;
     this.y += this.forwardMovementDelta.y;
     this.x += this.forwardMovementDelta.x;
 
-    if (map[this.y][this.x] === MapField.Unvisited) {
+    if (this.map[this.y][this.x] === MapField.Unvisited) {
       this.distinctVisitedFieldsCount += 1;
     }
-    map[this.y][this.x] = MapField.Player;
+    this.map[this.y][this.x] = MapField.Player;
   },
   turnRight() {
     this.facesDirection = (this.facesDirection + 1) % 4;
@@ -74,9 +93,6 @@ const guard = {
   },
   moveToTheEndOfTheMap() {
     while (this.reachedEndOfMap() === false) {
-      // printMap();
-      // await sleep(10);
-
       if (this.facesField() === MapField.Obstacle) {
         this.turnRight();
         continue;
@@ -84,11 +100,63 @@ const guard = {
       this.moveForward();
     }
   },
-};
+  testIfLoops() {
+    const obstacleCandidateX = this.x + this.forwardMovementDelta.x;
+    const obstacleCandidateY = this.y + this.forwardMovementDelta.y;
+    const turnedRightAt: Array<string> = [];
+    const obstacleCandidateHash = `${obstacleCandidateX}|${obstacleCandidateY}`;
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+    if (
+      this.map[obstacleCandidateY][obstacleCandidateX] !== MapField.Unvisited
+    ) {
+      return;
+    }
+
+    if (distinctLoopObstaclePositions.has(obstacleCandidateHash)) {
+      return;
+    }
+
+    this.map[obstacleCandidateY][obstacleCandidateX] = MapField.Obstacle;
+
+    while (
+      this.reachedEndOfMap() === false
+    ) {
+      if (this.facesField() === MapField.Obstacle) {
+        turnedRightAt.push(`>${this.x}|${this.y}`);
+
+        if (isLooping(turnedRightAt)) {
+          distinctLoopObstaclePositions.add(obstacleCandidateHash);
+          return;
+        }
+
+        this.turnRight();
+
+        continue;
+      }
+
+      this.moveForward();
+    }
+  },
+  findLoopsCount() {
+    while (this.reachedEndOfMap() === false) {
+      if (this.facesField() === MapField.Obstacle) {
+        this.turnRight();
+        continue;
+      }
+
+      const guardSimulator = {
+        ...this,
+        forwardMovementDelta: {
+          ...this.forwardMovementDelta,
+        },
+        map: this.map.map((row) => [...row]),
+      };
+
+      guardSimulator.testIfLoops();
+      this.moveForward();
+    }
+  },
+};
 
 for (let y = 0; y < map.length; y++) {
   for (let x = 0; x < map[y].length; x++) {
@@ -99,20 +167,7 @@ for (let y = 0; y < map.length; y++) {
   }
 }
 
-function printMap() {
-  let output = "";
-  for (let y = 0; y < map.length; y++) {
-    let line = "";
-    for (let x = 0; x < map[y].length; x++) {
-      line += map[y][x];
-    }
-    output += line + "\n";
-  }
-  console.clear();
-  console.log(output);
-}
-
-printMap();
-guard.moveToTheEndOfTheMap();
-
-console.log("the distinct route count ", guard.distinctVisitedFieldsCount);
+// guard.moveToTheEndOfTheMap();
+// console.log("the distinct route count ", guard.distinctVisitedFieldsCount);
+guard.findLoopsCount();
+console.log("loops count", distinctLoopObstaclePositions.size);
