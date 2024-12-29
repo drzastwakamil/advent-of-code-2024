@@ -26,16 +26,13 @@ function canCreateValueFromNumbers(value: number, numbers: Array<number>) {
     result = result.flatMap((possibleResult) => {
       const multiplied = possibleResult + nextNumber;
       const added = possibleResult * nextNumber;
+      const concatenated = Number(`${possibleResult}${nextNumber}`);
 
-      if (multiplied <= value && added <= value) {
-        return [multiplied, added];
-      } else if (multiplied <= value) {
-        return [multiplied];
-      } else if (added <= value) {
-        return [added];
-      }
-
-      return [];
+      return [
+        ...(multiplied <= value ? [multiplied] : []),
+        ...(added <= value ? [added] : []),
+        ...(concatenated <= value ? [concatenated] : []),
+      ];
     });
   }
 
