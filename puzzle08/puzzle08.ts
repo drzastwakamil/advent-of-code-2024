@@ -24,6 +24,15 @@ antennas.keys().forEach((frequency) => {
   console.log("antennas key frequency", frequency);
   for (let index = 0; index < (antennas.get(frequency) || []).length; index++) {
     const antennasOnFrequency = [...(antennas.get(frequency) || [])];
+    if (antennasOnFrequency.length > 1) {
+      for (const { x, y } of antennasOnFrequency) {
+        const antinodeHash = `${x}|${y}`;
+        if (!antiNodes.has(antinodeHash)) {
+          antiNodes.add(antinodeHash);
+        }
+      }
+    }
+
     const antenna = antennasOnFrequency.splice(index, 1)[0];
     console.log("antennas on freq", antennasOnFrequency);
     console.log("antenna", antenna);
@@ -34,16 +43,18 @@ antennas.keys().forEach((frequency) => {
       const deltaX = antenna.x - antennaToPairWith.x;
       const deltaY = antenna.y - antennaToPairWith.y;
 
-      const antinodeX = antenna.x + deltaX;
-      const antinodeY = antenna.y + deltaY;
-
-      const antinodeHash = `${antinodeX}|${antinodeY}`;
-      if (
-        !antiNodes.has(antinodeHash) &&
+      for (
+        let antinodeX = antenna.x + deltaX, antinodeY = antenna.y + deltaY;
         antinodeX >= 0 && antinodeX < grid[0].length && antinodeY >= 0 &&
-        antinodeY < grid.length
+        antinodeY < grid.length;
+        antinodeX += deltaX, antinodeY += deltaY
       ) {
-        antiNodes.add(antinodeHash);
+        const antinodeHash = `${antinodeX}|${antinodeY}`;
+        if (
+          !antiNodes.has(antinodeHash)
+        ) {
+          antiNodes.add(antinodeHash);
+        }
       }
     }
   }
