@@ -46,3 +46,13 @@ export function shiftFileBlocks(fileBlocks: string) {
   }
   return blocks.join("");
 }
+
+export function calculateInput(input: string) {
+  const fileBlocks = inputToFileBlocks(input);
+  const shiftedFileBlocks = shiftFileBlocks(fileBlocks);
+  const result = calculateCheckSumFrom(shiftFileBlocks(shiftedFileBlocks));
+
+  return result;
+}
+
+console.log("result ", calculateInput(input));
