@@ -5,7 +5,7 @@ const input = await Deno.readTextFile(
 type Block = number | ".";
 
 export function inputToFileBlocks(input: string): Array<Block> {
-  return input.split("").flatMap((value, index) => {
+  return input.split("").flatMap<Block>((value, index) => {
     if (value === "0") {
       return [];
     }
@@ -14,7 +14,7 @@ export function inputToFileBlocks(input: string): Array<Block> {
 
     if (index % 2 === 0) {
       const representativeIndex = index * 0.5;
-      return Array(blockLength).fill(representativeIndex);
+      return Array<number>(blockLength).fill(representativeIndex);
     }
 
     return Array<".">(blockLength).fill(".");
